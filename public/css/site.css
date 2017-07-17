@@ -1,0 +1,90 @@
+body {
+	background-color: #00A0DC;
+	color: white;
+}
+
+a {
+	color: white;
+}
+
+a:hover {
+	text-decoration: none;
+	color: white;
+}
+
+.nav-bar {
+	text-align: right;
+	padding: 15px;
+}
+
+header {
+	border-bottom: 1px solid gray;
+}
+
+.marginR15 {
+	margin-right: 15px !important;
+}
+
+.marginL15 {
+	margin-left: 15px !important;
+}
+
+.marginT30 {
+	margin-top: 30px !important;
+}
+
+.marginR5 {
+	margin-right: 5px;
+}
+
+.marginL5 {
+	margin-left: 5px;
+}
+
+td, th {
+	text-align: center;
+}
+
+td a {
+	color: white;
+	text-decoration: none;
+}
+
+td a:hover {
+	text-decoration: none;
+	color: ;
+}
+
+.low {
+	background-color: green;
+	border-radius: 100px;
+	color: white;
+}
+
+.medium {
+	background-color: yellow;
+	border-radius: 100px;
+	color: black;
+}
+
+.high {
+	background-color: red;
+	border-radius: 100px;
+	color: white;
+}
+
+.filter-container {
+	padding: 15px;
+}
+
+.select-box {
+	width: 15% !important;
+}
+
+.inline {
+	display: inline-block;
+}
+
+.inline .select-box {
+	width: auto !important;
+}
