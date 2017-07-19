@@ -27,7 +27,7 @@ class Task extends Model
 
     public function in_time()
     {
-        if (Carbon::parse($this->deadline) >= Carbon::now()) {
+        if (Carbon::parse($this->deadline)->format('Y.m.d') >= Carbon::now()->format('Y.m.d')) {
             return true;
         }
         else {
