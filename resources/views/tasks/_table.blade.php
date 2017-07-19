@@ -20,8 +20,13 @@
 						@if ($item->status == 'new')
 							<a href="{{ action('TasksController@edit', $item->id) }}">
 								<div class="{{ $item->priority }}">
-									{{ $item->name . ' | ' . $item->remaining_day() . ' days' }}
-									@if ($item->remaining_day() < 2)
+									@if ($item->in_time())
+										{{ $item->name . ' | ' . $item->remaining_day() . ' days' }}
+										@if ($item->remaining_day() < 2)
+											<i class="fa fa-exclamation-triangle marginL5" aria-hidden="true"></i>
+										@endif
+									@else
+										{{ $item->name .  ' | time is up' }}
 										<i class="fa fa-exclamation-triangle marginL5" aria-hidden="true"></i>
 									@endif
 								</div>
@@ -32,8 +37,13 @@
 						@if ($item->status == 'progress')
 							<a href="{{ action('TasksController@edit', $item->id) }}">
 								<div class="{{ $item->priority }}">
-									{{ $item->name . ' | ' . $item->remaining_day() . ' days' }}
-									@if ($item->remaining_day() < 2)
+									@if ($item->in_time())
+										{{ $item->name . ' | ' . $item->remaining_day() . ' days' }}
+										@if ($item->remaining_day() < 2)
+											<i class="fa fa-exclamation-triangle marginL5" aria-hidden="true"></i>
+										@endif
+									@else
+										{{ $item->name .  ' | time is up' }}
 										<i class="fa fa-exclamation-triangle marginL5" aria-hidden="true"></i>
 									@endif
 								</div>

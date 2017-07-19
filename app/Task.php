@@ -24,4 +24,14 @@ class Task extends Model
         $deadline = Carbon::parse($this->deadline);
         return $deadline->diffInDays(Carbon::now()) + 1;
     }
+
+    public function in_time()
+    {
+        if (Carbon::parse($this->deadline) >= Carbon::now()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
