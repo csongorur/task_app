@@ -89,6 +89,9 @@ class TasksController extends Controller
             $req['finished_at'] = Carbon::now()->toDateString();
         }
         elseif ($req['status'] == 'pushed') {
+            if ($item->finished_at == null) {
+                $req['finished_at'] = Carbon::now()->toDateString();
+            }
             $req['pushed_at'] = Carbon::now()->toDateString();
         }
         else {
