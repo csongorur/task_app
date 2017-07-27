@@ -34,4 +34,9 @@ class Task extends Model
             return false;
         }
     }
+
+    public static function total_tasks()
+    {
+        return Task::count();
+    }
 }

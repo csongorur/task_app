@@ -88,3 +88,7 @@ td a:hover {
 .inline .select-box {
 	width: auto !important;
 }
+
+.floatRight {
+	float: right;
+}

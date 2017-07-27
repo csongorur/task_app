@@ -30,6 +30,11 @@
 			    {!! Form::select('priority', Config::get('tasks.priority'), null, ['class' => 'form-control']) !!}
 			    <small class="text-danger">{{ $errors->first('priority') }}</small>
 			</div>
+			<div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+			    {!! Form::label('status', 'Status') !!}
+			    {!! Form::select('status', Config::get('tasks.status'), null, ['class' => 'form-control']) !!}
+			    <small class="text-danger">{{ $errors->first('status') }}</small>
+			</div>
 			<div class="form-group{{ $errors->has('deadline') ? ' has-error' : '' }}">
 			    {!! Form::label('deadline', 'Dead line') !!}
 			    {!! Form::date('deadline', \Carbon\Carbon::now(), ['class' => 'form-control']) !!}

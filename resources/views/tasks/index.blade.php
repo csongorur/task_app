@@ -31,6 +31,9 @@
 				@endforeach
 			</select>
 		</div>
+		<div class="total-tasks inline floatRight">
+			<h2>Total tasks: {{ App\Task::total_tasks() }}</h2>
+		</div>
 	</div>
 	<div class="table-container">
 		@include('tasks._table')
