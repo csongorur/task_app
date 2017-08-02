@@ -9,6 +9,7 @@
 				<th>Name</th>
 				<th>Tasks</th>
 				<th>Created Date</th>
+				<th>Total Tasks</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -18,6 +19,7 @@
 						<td><a href="{{ action('ProjectsController@edit', $project->id) }}">{{ $project->name }}</a></td>
 						<td>{{ $project->get_task_names() }}</td>
 						<td>{{ \Carbon\Carbon::parse($project->created_at)->format('Y.m.d') }}</td>
+						<td>{{ $project->total_tasks_nr() }}</td>
 					</tr>
 				@endforeach
 			@else
