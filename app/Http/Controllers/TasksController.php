@@ -19,11 +19,11 @@ class TasksController extends Controller
     }
 
     public function index()
-	{
+    {
         $items = Task::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(15);
 
-		return view('tasks.index')->with('items', $items);
-	}
+        return view('tasks.index')->with('items', $items);
+    }
 
     public function create()
     {
@@ -141,7 +141,6 @@ class TasksController extends Controller
         else {
             $items = $items->get();
         }
-
 
         return view('tasks._table')->with('items', $items);
     }
