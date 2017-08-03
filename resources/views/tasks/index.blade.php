@@ -31,8 +31,10 @@
 				@endforeach
 			</select>
 		</div>
-		<div class="total-tasks inline floatRight">
-			<h2>Total tasks: {{ App\Task::total_tasks() }}</h2>
+		<div class="inline floatRight status-container">
+			<h3>Total active tasks: {{ App\Task::total_active_tasks() }}</h3>
+			<h3>Total finished tasks: {{ App\Task::total_finished_tasks() }}</h3>
+			<h3>Total tasks: {{ App\Task::total_tasks() }}</h3>
 		</div>
 	</div>
 	<div class="table-container">

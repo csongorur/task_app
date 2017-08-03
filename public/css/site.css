@@ -92,3 +92,7 @@ td a:hover {
 .floatRight {
 	float: right;
 }
+
+.status-container h3 {
+	margin: 10px 0;
+}

@@ -39,4 +39,14 @@ class Task extends Model
     {
         return Task::count();
     }
+
+    public static function total_active_tasks()
+    {
+        return Task::where('status', 'new')->orWhere('status', 'progress')->count();
+    }
+
+    public static function total_finished_tasks()
+    {
+        return Task::where('status', 'finished')->orWhere('status', 'pushed')->count();
+    }
 }
