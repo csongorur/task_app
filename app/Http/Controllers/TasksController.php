@@ -49,14 +49,23 @@ class TasksController extends Controller
 
         $req['user_id'] = Auth::user()->id;
 
-        if ('' != $req['other_project']) {
+        if ($req['other_project'] != '') {
             $project = Project::create(['name' => $req['other_project'], 'user_id' => Auth::user()->id]);
             $req['project_id'] = $project->id;
         }
 
+        if ($req['status'] == 'finished') {
+            $req['finished_at'] = Carbon::now()->toDateString();
+        }
+
+        if ($req['status'] == 'pushed') {
+            $req['finished_at'] = Carbon::now()->toDateString();
+            $req['pushed_at'] = Carbon::now()->toDateString();
+        }
+
         Task::create($req);
 
-        Session::flash('success_msg', 'Create was successfull');
+        Session::flash('success_msg', 'Create was successful');
 
         return redirect()->action('TasksController@index');
     }
@@ -80,7 +89,7 @@ class TasksController extends Controller
 
         $req = $request->all();
 
-        if ('' != $req['other_project']) {
+        if ($req['other_project'] != '') {
             $project = Project::create(['name' => $req['other_project'], 'user_id' => Auth::user()->id]);
             $req['project_id'] = $project->id;
         }
@@ -99,7 +108,7 @@ class TasksController extends Controller
 
         $item->update($req);
 
-        Session::flash('success_msg', 'Update was successfull');
+        Session::flash('success_msg', 'Update was successful');
 
         return redirect()->action('TasksController@index');
     }
@@ -110,7 +119,7 @@ class TasksController extends Controller
 
         $item->delete();
 
-        Session::flash('success_msg', 'Delete was successfull');
+        Session::flash('success_msg', 'Delete was successful');
 
         return redirect()->action('TasksController@index');
     }
