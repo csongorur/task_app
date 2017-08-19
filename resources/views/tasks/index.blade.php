@@ -31,6 +31,12 @@
 				@endforeach
 			</select>
 		</div>
+		<div class="form-group inline marginL15">
+			<div class="daterange-container">
+				<label for="daterange">Interval</label>
+				<input id="daterange" class="form-control" type="text" name="daterange" />
+			</div>
+		</div>
 		<div class="inline floatRight status-container">
 			<h3>Total active tasks: {{ App\Task::total_active_tasks() }}</h3>
 			<h3>Total finished tasks: {{ App\Task::total_finished_tasks() }}</h3>
@@ -47,11 +53,46 @@
 	<script type="text/javascript">
 		$(function() {
 
+			$('input[name="daterange"]').daterangepicker({
+				autoUpdateInput: false,
+				locale: {
+					format: 'Y-M-D'
+				}
+			});
+
+			$('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+				$(this).val(picker.startDate.format('YYYY-MM-DD') + ' / ' + picker.endDate.format('YYYY-MM-DD'));
+
+				hidePagination();
+
+				$.ajax({
+					'url': '{{ action('TasksController@filter') }}',
+					'data': {'project': $('#project-filter').val(), 'status': $('#status-filter').val(), 'priority': $('#priority-filter').val(), 'interval': $('input[name="daterange"]').val()}
+				}).done(function(res) {
+					$('.table').remove();
+					$('.table-container').html(res);
+				});
+			});
+
+			$('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
+				$(this).val('');
+
+				hidePagination();
+
+				$.ajax({
+					'url': '{{ action('TasksController@filter') }}',
+					'data': {'project': $('#project-filter').val(), 'status': $('#status-filter').val(), 'priority': $('#priority-filter').val(), 'interval': $('input[name="daterange"]').val()}
+				}).done(function(res) {
+					$('.table').remove();
+					$('.table-container').html(res);
+				});
+			});
+
 			$('#project-filter, #status-filter, #priority-filter').change(function() {
 				hidePagination();
 				$.ajax({
 					'url': '{{ action('TasksController@filter') }}',
-					'data': {'project': $('#project-filter').val(), 'status': $('#status-filter').val(), 'priority': $('#priority-filter').val()}
+					'data': {'project': $('#project-filter').val(), 'status': $('#status-filter').val(), 'priority': $('#priority-filter').val(), 'interval': $('input[name="daterange"]').val()}
 				}).done(function(res) {
 					$('.table').remove();
 					$('.table-container').html(res);
@@ -59,7 +100,7 @@
 			});
 
 			function hidePagination() {
-				if ($('#project-filter').val() != -1 || $('#status-filter').val() != -1 || $('#priority-filter').val() != -1) {
+				if ($('#project-filter').val() != -1 || $('#status-filter').val() != -1 || $('#priority-filter').val() != -1 || $('input[name="daterange"]').val() != '') {
 					$('.pagination').addClass('hide');
 				}
 				else {

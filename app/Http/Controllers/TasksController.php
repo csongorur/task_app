@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Project;
+use App\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
-use App\Task;
-use App\Project;
-use Carbon\Carbon;
 
 class TasksController extends Controller
 {
@@ -42,14 +42,14 @@ class TasksController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
-            'deadline' => 'required'
+            'deadline' => 'required',
         ]);
 
         $req = $request->all();
 
         $req['user_id'] = Auth::user()->id;
 
-        if ($req['other_project'] != '') {
+        if ('' != $req['other_project']) {
             $project = Project::create(['name' => $req['other_project'], 'user_id' => Auth::user()->id]);
             $req['project_id'] = $project->id;
         }
@@ -80,21 +80,19 @@ class TasksController extends Controller
 
         $req = $request->all();
 
-        if ($req['other_project'] != '') {
+        if ('' != $req['other_project']) {
             $project = Project::create(['name' => $req['other_project'], 'user_id' => Auth::user()->id]);
             $req['project_id'] = $project->id;
         }
 
-        if ($req['status'] == 'finished') {
+        if ('finished' == $req['status']) {
             $req['finished_at'] = Carbon::now()->toDateString();
-        }
-        elseif ($req['status'] == 'pushed') {
-            if ($item->finished_at == null) {
+        } elseif ('pushed' == $req['status']) {
+            if (null == $item->finished_at) {
                 $req['finished_at'] = Carbon::now()->toDateString();
             }
             $req['pushed_at'] = Carbon::now()->toDateString();
-        }
-        else {
+        } else {
             $req['finished_at'] = null;
             $req['pushed_at'] = null;
         }
@@ -121,24 +119,28 @@ class TasksController extends Controller
     {
         $items = Task::query();
 
-        if (Input::get('project') != -1) {
+        if (Input::has('interval') && Input::get('interval') != '') {
+            $date = explode(' / ', Input::get('interval'));
+            $items = $items->where('created_at', '>=', $date[0])->where('created_at', '<=', Carbon::parse($date[1])->toDateString());
+        }
+
+        if (Input::has('project') && Input::get('project') != -1) {
             $items = $items->where('project_id', Input::get('project'))->orderBy('created_at', 'desc');
         }
 
-        if (Input::get('status') != -1) {
+        if (Input::has('status') && Input::get('status') != -1) {
             $items = $items->where('status', Input::get('status'))->orderBy('created_at', 'desc');
         }
 
-        if (Input::get('priority') != -1) {
+        if (Input::has('priority') && Input::get('priority') != -1) {
             $items = $items->where('priority', Input::get('priority'))->whereIn('status', ['new', 'progress']);
         }
 
         $items = $items->orderBy('created_at', 'desc');
 
-        if (Input::get('project') == -1 && Input::get('status') == -1 && Input::get('priority') == -1) {
+        if (Input::get('project') == -1 && Input::get('status') == -1 && Input::get('priority') == -1 && Input::get('interval') == '') {
             $items = $items->paginate(15);
-        }
-        else {
+        } else {
             $items = $items->get();
         }
 

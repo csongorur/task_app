@@ -96,3 +96,15 @@ td a:hover {
 .status-container h3 {
 	margin: 10px 0;
 }
+
+.daterange-container {
+	color: black;
+}
+
+.daterange-container label {
+	color: white;
+}
+
+.daterangepicker {
+	color: black;
+}
