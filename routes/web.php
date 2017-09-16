@@ -11,6 +11,7 @@
 |
 */
 
+// User
 Route::get('/', 'UsersController@index');
 Route::post('login', 'UsersController@login');
 Route::get('log-out', 'UsersController@log_out');
@@ -20,6 +21,8 @@ Route::get('user/{id}/edit', 'UsersController@edit');
 Route::post('user/{id}/update', 'UsersController@update');
 Route::get('user/{id}/delete', 'UsersController@delete');
 
+
+//Tasks
 Route::get('tasks', 'TasksController@index');
 Route::get('task/new', 'TasksController@create');
 Route::post('task/new/save', 'TasksController@store');
@@ -28,7 +31,13 @@ Route::post('task/{id}/update', 'TasksController@update');
 Route::get('task/{id}/delete', 'TasksController@delete');
 Route::get('task/list', 'TasksController@filter');
 
+
+// Projects
 Route::get('projects', 'ProjectsController@index');
 Route::get('project/{id}/edit', 'ProjectsController@edit');
 Route::post('project/{id}/update', 'ProjectsController@update');
 Route::get('project/{id}/delete', 'ProjectsController@delete');
+
+
+// Versions
+Route::get('version/new', 'VersionsController@update_version');
