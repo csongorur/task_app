@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Migration;
+use App\Task;
 use App\Version;
 use Artisan;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +18,13 @@ class VersionsController extends Controller
 
     public function update_version()
     {
+        // If no task redirect with error message
+        if (Task::count() <= 0) {
+            Session::flash('error_msg', 'No task!');
+
+            return redirect()->action('TasksController@index');
+        }
+
         $version = Version::orderBy('version', 'DESC')->first();
 
         if (is_null($version)) {
